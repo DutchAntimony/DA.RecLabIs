@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<PackageId>DA.Guards</PackageId>
+		<Authors>DutchAntimony</Authors>
+		<Description>Lightweight validation guards for C# projects.</Description>
+		<PackageTags>guard;validation;argument;preconditions</PackageTags>
+		
+	</PropertyGroup>
+
+</Project>
