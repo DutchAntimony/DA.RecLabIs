@@ -1,6 +1,6 @@
 ﻿namespace DA.Optional.Extensions;
 
-public static class CheckOptionExtensions
+public static class CheckExtensions
 {
     /// <summary>
     /// Apply a predicate to the option and only retain the value if the current value matches the predicate.

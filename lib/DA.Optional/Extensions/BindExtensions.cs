@@ -1,6 +1,6 @@
 ﻿namespace DA.Optional.Extensions;
 
-public static class BindOptionExtensions
+public static class BindExtensions
 {
     /// <summary>
     /// Bind the <see cref="Option"/>{<typeparamref name="TIn"/>} to an <see cref="Option"/>{<typeparamref name="TOut"/>}
