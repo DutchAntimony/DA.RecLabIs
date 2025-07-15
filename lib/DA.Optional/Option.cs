@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DA.Optional;
 
@@ -18,4 +19,5 @@ public static class Option
 }
 
 [EditorBrowsable(EditorBrowsableState.Never)]
+[ExcludeFromCodeCoverage]
 public sealed record NoContent();
