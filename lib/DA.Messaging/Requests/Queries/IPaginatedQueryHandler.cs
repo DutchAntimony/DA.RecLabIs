@@ -1,8 +1,8 @@
-﻿using DA.Messaging.Abstractions;
-using DA.Messaging.Pagination;
+﻿using DA.Messaging.Pagination;
+using DA.Messaging.Requests.Abstractions;
 using DA.Results;
 
-namespace DA.Messaging.Queries;
+namespace DA.Messaging.Requests.Queries;
 
 /// <summary>
 /// Handler for an <see cref="IPaginatedQuery{TResponse}"/>

@@ -1,7 +1,7 @@
-﻿using DA.Messaging.Abstractions;
+﻿using DA.Messaging.Requests.Abstractions;
 using DA.Results;
 
-namespace DA.Messaging.Queries;
+namespace DA.Messaging.Requests.Queries;
 
 /// <summary>
 /// Request to query a specific data entry that is handled by an <see cref="IQueryHandler{TResponse}">

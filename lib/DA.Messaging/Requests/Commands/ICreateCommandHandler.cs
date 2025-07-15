@@ -1,7 +1,7 @@
-﻿using DA.Messaging.Abstractions;
+﻿using DA.Messaging.Requests.Abstractions;
 using DA.Results;
 
-namespace DA.Messaging.Commands;
+namespace DA.Messaging.Requests.Commands;
 
 /// <summary>
 /// Handler for an <see cref="ICreateCommand{TCreated}"/>

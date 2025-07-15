@@ -21,11 +21,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="DA.Messaging.Abstractions" />
     <Using Include="DA.Messaging.DependencyInjection" />
-    <Using Include="DA.Messaging.Commands" />
-    <Using Include="DA.Messaging.Queries" />
     <Using Include="DA.Messaging.Pagination;" />
+	<Using Include="DA.Messaging.Requests.Abstractions" />
+	<Using Include="DA.Messaging.Requests.Commands" />
+	<Using Include="DA.Messaging.Requests.Queries" />
     <Using Include="DA.Results" />
     <Using Include="Shouldly" />
     <Using Include="Xunit" />

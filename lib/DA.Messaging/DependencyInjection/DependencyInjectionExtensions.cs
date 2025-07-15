@@ -1,4 +1,5 @@
-﻿using DA.Messaging.Abstractions;
+﻿using DA.Messaging.Requests;
+using DA.Messaging.Requests.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;

@@ -1,4 +1,4 @@
-﻿namespace DA.Messaging.Abstractions;
+﻿namespace DA.Messaging.Requests.Abstractions;
 
 /// <summary>
 /// Marker interface for every request that can be handled by the <see cref="IRequestDispatcher"/>

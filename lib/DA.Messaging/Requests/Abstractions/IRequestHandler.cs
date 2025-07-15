@@ -1,4 +1,4 @@
-﻿namespace DA.Messaging.Abstractions;
+﻿namespace DA.Messaging.Requests.Abstractions;
 
 /// <summary>
 /// Generic request handler for any request.

@@ -1,9 +1,9 @@
-﻿using DA.Messaging.Abstractions;
+﻿using DA.Messaging.Requests.Abstractions;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Linq.Expressions;
 
-namespace DA.Messaging;
+namespace DA.Messaging.Requests;
 
 /// <inheritdoc cref="IRequestDispatcher" />
 internal sealed class RequestDispatcher(IServiceProvider _provider, ILogger<RequestDispatcher> _logger) : IRequestDispatcher

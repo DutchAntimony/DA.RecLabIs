@@ -1,4 +1,4 @@
-﻿namespace DA.Messaging.Abstractions;
+﻿namespace DA.Messaging.Requests.Abstractions;
 
 /// <summary>
 /// Dispatcher that handles a <see cref="IRequest{TResponse}"/> and returns a response of type <typeparamref name="TResponse"/>.
