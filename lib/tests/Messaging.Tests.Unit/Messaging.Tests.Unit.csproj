@@ -23,12 +23,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Using Include="DA.Optional" />
     <Using Include="DA.Messaging.DependencyInjection" />
+    <Using Include="DA.Messaging.Notifications" />
+    <Using Include="DA.Messaging.Notifications.Abstractions" />
     <Using Include="DA.Messaging.Pagination;" />
 	<Using Include="DA.Messaging.Requests.Abstractions" />
 	<Using Include="DA.Messaging.Requests.Commands" />
 	<Using Include="DA.Messaging.Requests.Queries" />
     <Using Include="DA.Results" />
+    <Using Include="DA.Results.Errors" />
+	<Using Include="NSubstitute" />
     <Using Include="Shouldly" />
     <Using Include="Xunit" />
   </ItemGroup>

@@ -1,7 +1,4 @@
-﻿using DA.Messaging.Notifications;
-using DA.Messaging.Notifications.Abstractions;
-using Messaging.Tests.Unit.Notifications.Samples;
-using NSubstitute;
+﻿using Messaging.Tests.Unit.Notifications.Samples;
 
 namespace Messaging.Tests.Unit.Notifications;
 

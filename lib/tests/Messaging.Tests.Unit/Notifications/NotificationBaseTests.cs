@@ -1,5 +1,4 @@
-﻿using DA.Messaging.Notifications;
-using Messaging.Tests.Unit.Notifications.Samples;
+﻿using Messaging.Tests.Unit.Notifications.Samples;
 
 namespace Messaging.Tests.Unit.Notifications;
 

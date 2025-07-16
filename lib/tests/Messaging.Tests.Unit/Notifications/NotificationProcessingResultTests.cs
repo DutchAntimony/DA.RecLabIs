@@ -1,7 +1,4 @@
-﻿using DA.Messaging.Notifications;
-using DA.Results.Errors;
-
-namespace Messaging.Tests.Unit.Notifications;
+﻿namespace Messaging.Tests.Unit.Notifications;
 
 public class NotificationProcessingResultTests
 {

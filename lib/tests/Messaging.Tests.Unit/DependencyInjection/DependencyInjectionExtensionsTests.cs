@@ -1,9 +1,6 @@
-﻿using DA.Messaging.Notifications;
-using DA.Messaging.Notifications.Abstractions;
-using Messaging.Tests.Unit.Notifications.Samples;
+﻿using Messaging.Tests.Unit.Notifications.Samples;
 using Messaging.Tests.Unit.Requests.Samples;
 using Microsoft.Extensions.DependencyInjection;
-using NSubstitute;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Messaging.Tests.Unit.DependencyInjection;

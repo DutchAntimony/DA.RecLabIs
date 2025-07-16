@@ -1,10 +1,7 @@
-﻿using DA.Messaging.Notifications;
-using DA.Messaging.Notifications.Abstractions;
-using Messaging.Tests.Unit.Notifications.Samples;
+﻿using Messaging.Tests.Unit.Notifications.Samples;
 using Messaging.Tests.Unit.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
-using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 
 namespace Messaging.Tests.Unit.Notifications;

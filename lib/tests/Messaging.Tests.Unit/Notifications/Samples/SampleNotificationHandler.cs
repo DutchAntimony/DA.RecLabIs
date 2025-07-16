@@ -1,6 +1,4 @@
-﻿using DA.Messaging.Notifications.Abstractions;
-
-namespace Messaging.Tests.Unit.Notifications.Samples;
+﻿namespace Messaging.Tests.Unit.Notifications.Samples;
 
 public sealed class SampleNotificationHandler : INotificationHandler<SampleNotification>
 {

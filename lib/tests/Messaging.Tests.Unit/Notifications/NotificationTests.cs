@@ -1,5 +1,4 @@
-﻿using DA.Messaging.Notifications.Abstractions;
-using Messaging.Tests.Unit.Notifications.Samples;
+﻿using Messaging.Tests.Unit.Notifications.Samples;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Messaging.Tests.Unit.Notifications;
