@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DA.Optional\DA.Optional.csproj" />
     <ProjectReference Include="..\DA.Results\DA.Results.csproj" />
   </ItemGroup>
 

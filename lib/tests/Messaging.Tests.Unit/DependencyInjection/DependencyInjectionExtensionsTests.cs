@@ -1,4 +1,4 @@
-﻿using Messaging.Tests.Unit.Samples;
+﻿using Messaging.Tests.Unit.Requests.Samples;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Messaging.Tests.Unit.DependencyInjection;
@@ -10,7 +10,7 @@ public class DependencyInjectionExtensionsTests
     {
         var services = new ServiceCollection();
 
-        services.AddMessaging();
+        services.AddRequestMessaging();
 
         var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<IRequestDispatcher>().ShouldNotBeNull();
@@ -21,7 +21,7 @@ public class DependencyInjectionExtensionsTests
     {
         var services = new ServiceCollection();
 
-        services.AddMessagingWithHandlersFromAssembly(typeof(SampleQuery).Assembly);
+        services.AddRequestMessaging(options => options.FromAssembly(typeof(SampleQuery).Assembly));
 
         var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<IRequestDispatcher>().ShouldNotBeNull();
@@ -33,7 +33,7 @@ public class DependencyInjectionExtensionsTests
     {
         var services = new ServiceCollection();
 
-        services.AddMessagingWithHandlersFromAssemblies(typeof(SampleQuery).Assembly);
+        services.AddRequestMessaging(options => options.FromAssemblies(typeof(SampleQuery).Assembly));
 
         var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<IRequestDispatcher>().ShouldNotBeNull();
@@ -45,7 +45,7 @@ public class DependencyInjectionExtensionsTests
     {
         var services = new ServiceCollection();
 
-        services.AddMessagingWithHandlersFromAssemblyContaining<SampleQuery>();
+        services.AddRequestMessaging(options => options.FromAssemblyContaining<SampleQuery>());
 
         var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<IRequestDispatcher>().ShouldNotBeNull();

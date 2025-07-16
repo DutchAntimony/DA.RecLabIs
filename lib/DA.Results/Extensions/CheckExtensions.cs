@@ -42,7 +42,7 @@ public static class CheckExtensions
     /// <param name="check">A task that performs a validation or check and returns an <see cref="IResult"/>.</param>
     /// <returns>The original <see cref="Result"/> if it is successful or if the check function does not produce a failure. 
     /// Otherwise, returns a new <see cref="Result"/> representing the failure from the check function.</returns>
-    public static async Task<Result> CheckAsync(this Result result, Func<Task<IResult>> check)
+    public static async Task<Result> CheckAsync(this Result result, Func<Task<Result>> check)
     {
         if (!result.IsSuccess)
         {
@@ -88,7 +88,7 @@ public static class CheckExtensions
     /// <param name="check">A task that performs a validation or check and returns an <see cref="IResult"/>.</param>
     /// <returns>The original <see cref="Result"/> if it is successful or if the check function does not produce a failure. 
     /// Otherwise, returns a new <see cref="Result"/> representing the failure from the check function.</returns>
-    public static async Task<Result> CheckAsync(this Task<Result> resultTask, Func<Task<IResult>> check)
+    public static async Task<Result> CheckAsync(this Task<Result> resultTask, Func<Task<Result>> check)
     {
         var result = await resultTask;
         return await CheckAsync(result, check);
@@ -134,7 +134,7 @@ public static class CheckExtensions
     /// indicating the outcome of the validation.</param>
     /// <returns>The original <see cref="Result{TValue}"/> if the validation succeeds, or the failure result returned by the
     /// <paramref name="check"/> function if the validation fails.</returns>
-    public static async Task<Result<TValue>> CheckAsync<TValue>(this Result<TValue> result, Func<TValue, Task<IResult>> check)
+    public static async Task<Result<TValue>> CheckAsync<TValue>(this Result<TValue> result, Func<TValue, Task<Result>> check)
     {
         if (!result.TryGetValue(out var value))
         {
@@ -180,7 +180,7 @@ public static class CheckExtensions
     /// indicating the outcome of the validation.</param>
     /// <returns>The original <see cref="Result{TValue}"/> if the validation succeeds, or the failure result returned by the
     /// <paramref name="check"/> function if the validation fails.</returns>
-    public static async Task<Result<TValue>> CheckAsync<TValue>(this Task<Result<TValue>> resultTask, Func<TValue, Task<IResult>> check)
+    public static async Task<Result<TValue>> CheckAsync<TValue>(this Task<Result<TValue>> resultTask, Func<TValue, Task<Result>> check)
     {
         var result = await resultTask;
         return await CheckAsync(result, check);

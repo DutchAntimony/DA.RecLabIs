@@ -1,7 +1,7 @@
-﻿using Messaging.Tests.Unit.Samples;
+﻿using Messaging.Tests.Unit.Requests.Samples;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Messaging.Tests.Unit;
+namespace Messaging.Tests.Unit.Requests;
 
 public partial class RequestDispatcherTests
 {
@@ -50,7 +50,7 @@ public partial class RequestDispatcherTests
     {
         var services = new ServiceCollection();
 
-        services.AddMessagingWithHandlersFromAssemblyContaining<SampleQueryHandler>();
+        services.AddRequestMessaging(options => options.FromAssemblyContaining<SampleQueryHandler>());
 
         var provider = services.BuildServiceProvider();
         return provider.GetRequiredService<IRequestDispatcher>();
@@ -60,7 +60,7 @@ public partial class RequestDispatcherTests
     {
         var services = new ServiceCollection();
 
-        services.AddMessaging();
+        services.AddRequestMessaging();
 
         var provider = services.BuildServiceProvider();
         return provider.GetRequiredService<IRequestDispatcher>();

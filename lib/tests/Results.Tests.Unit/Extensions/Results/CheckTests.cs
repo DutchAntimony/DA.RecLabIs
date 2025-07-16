@@ -35,8 +35,8 @@ public class CheckTests : ExtensionTestsBase
     [Fact]
     public async Task CheckAsyncOverloads()
     {
-        Func<Task<IResult>> successFuncTask = async () => await Task.FromResult(Result.Success());
-        Func<Task<IResult>> failureFuncTask = async () => await Task.FromResult(Result.Failure(_nextError));
+        Func<Task<Result>> successFuncTask = async () => await Task.FromResult(Result.Success());
+        Func<Task<Result>> failureFuncTask = async () => await Task.FromResult(Result.Failure(_nextError));
         (await _successResult.CheckAsync(successFuncTask)).IsSuccess.ShouldBeTrue();
         (await _successResult.CheckAsync(failureFuncTask)).ShouldBeFailureWithError(_nextError);
         (await _failureResult.CheckAsync(successFuncTask)).ShouldBeFailureWithError(_originalError);

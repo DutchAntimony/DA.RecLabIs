@@ -1,4 +1,6 @@
-﻿using DA.Messaging.Requests;
+﻿using DA.Messaging.Notifications;
+using DA.Messaging.Notifications.Abstractions;
+using DA.Messaging.Requests;
 using DA.Messaging.Requests.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -10,72 +12,88 @@ namespace DA.Messaging.DependencyInjection;
 public static class DependencyInjectionExtensions
 {
     /// <summary>
-    /// Extension method to add DA.Messaging services to the service collection.
+    /// Add notification messaging services to the service collection with 
+    /// the default configuration and without assemblies to scan.
     /// </summary>
-    /// <param name="services">The service collection to add the services to.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddMessaging(this IServiceCollection services)
-    {
-        services.AddRequestDispatcher();
-
-        return services;
-    }
+    public static IServiceCollection AddNotificationMessaging(this IServiceCollection services) => services.AddNotificationMessaging(_ => { /* use defaults */ });
 
     /// <summary>
-    /// Extension method to add DA.Messaging services to the service collection.
-    /// Also adds all request handlers from the specified assembly.
+    /// Add notification messaging services to the service collection with custom configuration.
     /// </summary>
-    /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="handlerAssembly">The assembly of which the handlers should be registered.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddMessagingWithHandlersFromAssembly(this IServiceCollection services, Assembly handlerAssembly)
+    /// <param name="configure">Delegate to configure the options for the notification messaging.</param>
+    public static IServiceCollection AddNotificationMessaging(this IServiceCollection services, Action<NotificationMessagingOptions> configure)
     {
-        services.AddRequestDispatcher();
-        services.AddHandlersFromAssembly(handlerAssembly);
-        return services;
-    }
+        var options = new NotificationMessagingOptions();
+        configure(options);
 
-    /// <summary>
-    /// Extension method to add DA.Messaging services to the service collection.
-    /// Also adds all request handlers from the specified assembly.
-    /// </summary>
-    /// <param name="services">The service collection to add the services to.</param>
-    /// <param name="handlerAssemblies">The assemblies of which the handlers should be registered.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddMessagingWithHandlersFromAssemblies(this IServiceCollection services, params Assembly[] handlerAssemblies)
-    {
-        services.AddRequestDispatcher();
+        services.TryAddSingleton<INotificationPublisher, NotificationPublisher>();
+        // Register a fallback no-op logger if none is provided because NotificationPublisher requires an ILogger
+        services.TryAddSingleton(typeof(ILogger<>), typeof(NullLogger<>));
 
-        foreach (var assembly in handlerAssemblies)
+        // Register all handlers from the specified assemblies
+        foreach (var assembly in options.HandlerAssemblies)
         {
-            services.AddHandlersFromAssembly(assembly);
+            services.AddNotificationHandlersFromAssembly(assembly);
+        }
+
+        if (options.CustomNotificationStoreType is not null)
+        {
+            // Register the custom notification store type if provided. This is registered as scoped to ensure compatibility with e.g. EF Core.
+            services.TryAddScoped(typeof(INotificationStore), options.CustomNotificationStoreType);
+        }
+        else
+        {
+            /// Register the in-memory notification store as the default implementation. This is registered as singleton because the in memory collection contains state that is stored over the lifeteime of requests.
+            services.TryAddSingleton<INotificationStore, InMemoryNotificationStore>();
         }
 
         return services;
     }
 
     /// <summary>
-    /// Extension method to add DA.Messaging services to the service collection.
-    /// Also adds all request handlers from the specified assemblies.
+    /// Add request messaging services to the service collection with 
+    /// the default configuration and without assemblies to scan.
     /// </summary>
-    /// <param name="services">The service collection to add the services to.</param>
-    /// <returns>The updated service collection.</returns>
-    public static IServiceCollection AddMessagingWithHandlersFromAssemblyContaining<THandlerAssembly>(this IServiceCollection services)
-    {
-        services.AddRequestDispatcher();
-        services.AddHandlersFromAssembly(typeof(THandlerAssembly).Assembly);
-        return services;
-    }
+    public static IServiceCollection AddRequestMessaging(this IServiceCollection services) => services.AddRequestMessaging(_ => { /* use defaults */ });
 
-    private static void AddRequestDispatcher(this IServiceCollection services)
+    /// <summary>
+    /// Add request messaging services to the service collection with custom configuration
+    /// </summary>
+    /// <param name="configure">Delegate to configure the options for the request messaging.</param>
+    public static IServiceCollection AddRequestMessaging(this IServiceCollection services, Action<RequestMessagingOptions> configure)
     {
+        var options = new RequestMessagingOptions();
+        configure(options);
+
         services.TryAddSingleton<IRequestDispatcher, RequestDispatcher>();
 
         // Register a fallback no-op logger if none is provided because RequestDispatcher requires an ILogger
         services.TryAddSingleton(typeof(ILogger<>), typeof(NullLogger<>));
+
+        foreach (var assembly in options.HandlerAssemblies)
+        {
+            services.AddRequestHandlersFromAssembly(assembly);
+        }
+
+        return services;
+    }
+   
+    private static void AddNotificationHandlersFromAssembly(this IServiceCollection services, Assembly handlerAssembly)
+    {
+        var handlerTypes = handlerAssembly
+                        .GetTypes()
+                        .Where(t => !t.IsAbstract && !t.IsInterface)
+                        .SelectMany(t => t.GetInterfaces(), (t, i) => new { Interface = i, Implementation = t })
+                        .Where(x => x.Interface.IsGenericType && x.Interface.GetGenericTypeDefinition() == typeof(INotificationHandler<>))
+                        .ToList();
+
+        foreach (var registration in handlerTypes)
+        {
+            services.TryAddScoped(registration.Interface, registration.Implementation);
+        }
     }
 
-    private static void AddHandlersFromAssembly(this IServiceCollection services, Assembly handlerAssembly)
+    private static void AddRequestHandlersFromAssembly(this IServiceCollection services, Assembly handlerAssembly)
     {
         var handlerTypes = handlerAssembly.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract)

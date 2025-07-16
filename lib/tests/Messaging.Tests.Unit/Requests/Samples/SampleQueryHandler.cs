@@ -1,4 +1,4 @@
-﻿namespace Messaging.Tests.Unit.Samples;
+﻿namespace Messaging.Tests.Unit.Requests.Samples;
 
 internal class SampleQueryHandler : IQueryHandler<SampleQuery, string>
 {
