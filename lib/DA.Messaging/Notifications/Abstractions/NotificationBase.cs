@@ -1,4 +1,4 @@
-﻿namespace DA.Messaging.Notifications;
+﻿namespace DA.Messaging.Notifications.Abstractions;
 
 /// <summary>
 /// Abstract base class for notifications that can be sent through the messaging system.

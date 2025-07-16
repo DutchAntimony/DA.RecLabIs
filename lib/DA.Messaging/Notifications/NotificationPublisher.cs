@@ -21,7 +21,7 @@ internal sealed class NotificationPublisher(
 {
     // Caches the handler types, not the concrete implementation, for each notification type to avoid scanning multiple times.
     // The actual handler instances are resolved from the service provider when needed, with the correct scope.
-    private readonly ConcurrentDictionary<Type, Type[]> _handlerTypeCache = new();
+    private readonly ConcurrentDictionary<Type, Type> _handlerInterfaceTypeCache = new();
 
     /// <inheritdoc />
     public async Task PublishAsync(CancellationToken cancellationToken = default)
@@ -42,43 +42,38 @@ internal sealed class NotificationPublisher(
     {
         var notificationType = notification.GetType();
 
-        var handlerTypes = _handlerTypeCache.GetOrAdd(notificationType, t =>
-        {
-            var genericHandlerType = typeof(INotificationHandler<>).MakeGenericType(t);
-            return serviceProvider
-                .GetServices(genericHandlerType)
-                .Select(h => h!.GetType())
-                .ToArray();
-        });
+        var handlerInterfaceType = _handlerInterfaceTypeCache.GetOrAdd(notificationType,
+            t => typeof(INotificationHandler<>).MakeGenericType(t));
 
-        if (handlerTypes.Length == 0)
+        var handlers = serviceProvider.GetServices(handlerInterfaceType).ToList();
+        if (handlers.Count == 0)
         {
             logger.LogWarning("No handlers registered for {NotificationType}.", notificationType.Name);
             return NotificationProcessingResult.Failure(nameof(NotificationPublisher), "No handlers registered for this notification type.");
         }
 
         Result result = Result.Success();
-        foreach (var handlerType in handlerTypes)
+        foreach (var handler in handlers)
         {
             result = await result.CheckAsync(() =>
-                HandleNotificationForHandlerTypeAsync(serviceProvider, notification, handlerType, cancellationToken));
+                HandleNotificationForHandlerTypeAsync(serviceProvider, notification, handler!, handlerInterfaceType, cancellationToken));
         }
+
         return NotificationProcessingResult.FromResult(result, nameof(NotificationPublisher), DateTime.UtcNow);
     }
 
-    private async Task<Result> HandleNotificationForHandlerTypeAsync(IServiceProvider serviceProvider, INotification notification, Type handlerType, CancellationToken cancellationToken)
+    private async Task<Result> HandleNotificationForHandlerTypeAsync(IServiceProvider serviceProvider, INotification notification, object handler, Type handlerInterfaceType, CancellationToken cancellationToken)
     {
         try
         {
-            var handler = serviceProvider.GetRequiredService(handlerType);
-            var method = handlerType.GetMethod("HandleAsync")!;
+            var method = handlerInterfaceType.GetMethod("HandleAsync")!;
             var task = (Task)method.Invoke(handler, [notification, cancellationToken])!;
             await task.ConfigureAwait(false);
             return Result.Success();
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error processing notification {NotificationType} with handler {HandlerType}.", notification.GetType().Name, handlerType.Name);
+            logger.LogError(ex, "Error processing notification {NotificationType} with handler {HandlerType}.", notification.GetType().Name, handler.GetType().Name);
             return new UnexpectedError(ex);
         }
     }

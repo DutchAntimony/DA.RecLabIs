@@ -55,7 +55,7 @@ internal sealed class InMemoryNotificationStore : INotificationStore
     {
         var failedNotifications = _notifications.Values
             .Where(n => n.ProcessingResult.IsProcessed && !n.ProcessingResult.IsSuccessful)
-            .Where(n => n.CreatedAt >= sinceUtc)
+            .Where(n => n.ProcessingResult.ProcessedAt >= sinceUtc)
             .ToList();
 
         return Task.FromResult<IReadOnlyCollection<INotification>>(failedNotifications.AsReadOnly());

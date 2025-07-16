@@ -56,7 +56,7 @@ public record NotificationProcessingResult
     /// <param name="errorMessage">The message indicating why the processing failed.</param>
     /// <returns>A failing <see cref="NotificationProcessingResult"/></returns>
     public static NotificationProcessingResult Failure(string processedBy, string errorMessage, DateTime? processedAt = null) =>
-        new(false, processedAt ?? DateTime.UtcNow, processedBy, errorMessage);
+        new(true, processedAt ?? DateTime.UtcNow, processedBy, errorMessage);
 
     /// <summary>
     /// Create a <see cref="NotificationProcessingResult"/> from a <see cref="Result"/>.
