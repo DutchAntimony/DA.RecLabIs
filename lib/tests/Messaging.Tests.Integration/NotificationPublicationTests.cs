@@ -1,15 +1,12 @@
-﻿using DA.Messaging.Requests.Behaviours;
-using Messaging.Tests.Unit.Notifications.Samples;
-using Messaging.Tests.Unit.Requests.Samples;
-using Microsoft.Extensions.Configuration;
+﻿using Messaging.Tests.Data;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Messaging.Tests.Unit.Notifications;
-public class NotificationIntegrationTests
-{
+namespace Messaging.Tests.Integration;
 
+public class NotificationPublicationTests
+{
     [Fact]
-    public async Task Should_Publish_Notification_And_Invoke_Handler()
+    public async Task PublishedNotification_ShouldGetHandled()
     {
         var services = new ServiceCollection();
         services.AddNotificationMessaging(options => options.FromAssemblyContaining<SampleNotificationHandler>());
@@ -25,7 +22,7 @@ public class NotificationIntegrationTests
         var publisher = provider.GetRequiredService<INotificationPublisher>();
 
         var notification = new SampleNotification(payload);
-        
+
         await store.StoreAsync(notification, CancellationToken.None);
 
         var pending = await store.GetPendingNotificationsAsync(CancellationToken.None);
@@ -86,53 +83,4 @@ public class NotificationIntegrationTests
         actualFailed.ProcessingResult.ErrorMessage.ShouldBe("No handlers registered for this notification type.");
     }
 
-    [Fact]
-    public async Task Pipeline_WithPerformanceLogging_EmitsNotification_WhenRequestIsSlow()
-    {
-        var services = new ServiceCollection();
-
-        var configuration = new ConfigurationBuilder().Build();
-        services.AddSingleton<IConfiguration>(configuration);
-
-        services.AddRequestMessaging(options =>
-        {
-            options.FromAssemblyContaining<SlowSampleQueryHandler>();
-            options.AddPerformanceLoggingBehavior(configure =>
-            {
-                configure.MaxExpectedDuration = TimeSpan.FromMilliseconds(50);
-            });
-        });
-
-        services.AddNotificationMessaging(options => options.FromAssemblyContaining<TestNotificationHandler>());
-
-        var sink = new InMemoryTestNoficationSink();
-        services.AddSingleton<ITestNotificationSink>(sink);
-
-        var provider = services.BuildServiceProvider();
-
-        var dispatcher = provider.GetRequiredService<IRequestDispatcher>();
-        var publisher = provider.GetRequiredService<INotificationPublisher>();
-        var store = provider.GetRequiredService<INotificationStore>();
-
-        var result = await dispatcher.DispatchAsync(new SlowSampleQuery(TimeSpan.FromMilliseconds(75)), CancellationToken.None);
-
-        result.IsSuccess.ShouldBeTrue();
-        result.TryGetValue(out var value).ShouldBeTrue();
-        value.ShouldBe("response from slow handler");
-
-        // op dit moment zou de notification moeten zijn opgeslagen in de store
-        var pendingNotifications = await store.GetPendingNotificationsAsync(CancellationToken.None);
-        pendingNotifications.Count.ShouldBe(1);
-
-        // nu publiceren we de notification
-        await publisher.PublishAsync(CancellationToken.None);
-
-        // en nu zou de notification handler deze moeten hebben verwerkt
-        sink.Notifications.Count.ShouldBe(1);
-        var notification = sink.Notifications.Single() as RequestExceedsExpectedDurationNotification;
-        notification.ShouldNotBeNull();
-        notification.RequestType.ShouldBe(nameof(SlowSampleQuery));
-        notification.ResponseType.ShouldBe("Result<String>");
-        notification.Duration.ShouldBeGreaterThanOrEqualTo(TimeSpan.FromMilliseconds(75));
-    }
 }

@@ -1,7 +1,5 @@
-﻿using Messaging.Tests.Unit.Notifications.Samples;
-using Messaging.Tests.Unit.Requests.Samples;
+﻿using Messaging.Tests.Data;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Messaging.Tests.Unit.DependencyInjection;
 
@@ -120,7 +118,6 @@ public class DependencyInjectionExtensionsTests
         serviceProvider.GetService<INotificationStore>().ShouldNotBeNull();
     }
 
-    [ExcludeFromCodeCoverage]
     private sealed class SampleNotificationStore : INotificationStore
     {
         public async Task StoreAsync(INotification notification, CancellationToken cancellationToken)

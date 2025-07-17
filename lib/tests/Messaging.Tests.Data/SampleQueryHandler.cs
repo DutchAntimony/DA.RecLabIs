@@ -1,6 +1,6 @@
-﻿namespace Messaging.Tests.Unit.Requests.Samples;
+﻿namespace Messaging.Tests.Data;
 
-internal class SampleQueryHandler : IQueryHandler<SampleQuery, string>
+public class SampleQueryHandler : IQueryHandler<SampleQuery, string>
 {
     public Task<Result<string>> HandleAsync(SampleQuery request, CancellationToken cancellationToken)
         => Task.FromResult(Result.Success("response from handler"));

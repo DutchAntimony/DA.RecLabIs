@@ -1,6 +1,6 @@
-﻿namespace Messaging.Tests.Unit.Requests.Samples;
+﻿namespace Messaging.Tests.Data;
 
-internal class SlowSampleQueryHandler : IQueryHandler<SlowSampleQuery, string>
+public class SlowSampleQueryHandler : IQueryHandler<SlowSampleQuery, string>
 {
     public async Task<Result<string>> HandleAsync(SlowSampleQuery request, CancellationToken cancellationToken)
     {

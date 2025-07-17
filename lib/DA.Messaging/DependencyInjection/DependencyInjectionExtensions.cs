@@ -28,7 +28,6 @@ public static class DependencyInjectionExtensions
         configure(options);
 
         services.TryAddSingleton<INotificationPublisher, NotificationPublisher>();
-        // Register a fallback no-op logger if none is provided because NotificationPublisher requires an ILogger
         services.TryAddSingleton(typeof(ILogger<>), typeof(NullLogger<>));
 
         // Register all handlers from the specified assemblies

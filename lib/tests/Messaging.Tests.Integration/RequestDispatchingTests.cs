@@ -1,11 +1,10 @@
-﻿using Messaging.Tests.Unit.Requests.Samples;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Messaging.Tests.Data;
 
-namespace Messaging.Tests.Unit.Requests;
+namespace Messaging.Tests.Integration;
 
-public partial class RequestDispatcherTests
+public class RequestDispatchingTests
 {
-
     [Fact]
     public async Task Should_Dispatch_Handler_On_First_Use()
     {

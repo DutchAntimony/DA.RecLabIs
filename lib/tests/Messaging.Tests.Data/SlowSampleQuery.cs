@@ -1,6 +1,6 @@
-﻿namespace Messaging.Tests.Unit.Requests.Samples;
+﻿namespace Messaging.Tests.Data;
 
-internal class SlowSampleQuery : IQuery<string>
+public class SlowSampleQuery : IQuery<string>
 {
     public TimeSpan Delay { get; }
     public SlowSampleQuery(TimeSpan delay)

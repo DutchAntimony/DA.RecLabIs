@@ -1,4 +1,4 @@
-﻿using Messaging.Tests.Unit.Notifications.Samples;
+﻿using Messaging.Tests.Data;
 
 namespace Messaging.Tests.Unit.Notifications;
 

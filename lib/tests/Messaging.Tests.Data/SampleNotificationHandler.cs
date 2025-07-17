@@ -1,4 +1,4 @@
-﻿namespace Messaging.Tests.Unit.Notifications.Samples;
+﻿namespace Messaging.Tests.Data;
 
 public sealed class SampleNotificationHandler(ITestNotificationSink sink)
     : INotificationHandler<SampleNotification>

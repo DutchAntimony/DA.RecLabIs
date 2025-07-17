@@ -1,4 +1,4 @@
-﻿using Messaging.Tests.Unit.Notifications.Samples;
+﻿using Messaging.Tests.Data;
 using Messaging.Tests.Unit.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -9,6 +9,7 @@ namespace Messaging.Tests.Unit.Notifications;
 public class NotificationPublisherTests
 {
     private readonly SampleNotification _notification = new("payload");
+
     [Fact]
     public async Task PublishAsync_Should_InvokeHandler_AndMarkAsPublished()
     {

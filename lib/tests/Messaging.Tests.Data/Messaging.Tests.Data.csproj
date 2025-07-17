@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DA.Messaging\DA.Messaging.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Using Include="DA.Optional" />
+	<Using Include="DA.Messaging.DependencyInjection" />
+	<Using Include="DA.Messaging.Notifications" />
+	<Using Include="DA.Messaging.Notifications.Abstractions" />
+	<Using Include="DA.Messaging.Pagination;" />
+	<Using Include="DA.Messaging.Requests.Abstractions" />
+	<Using Include="DA.Messaging.Requests.Commands" />
+	<Using Include="DA.Messaging.Requests.Queries" />
+	<Using Include="DA.Results" />
+	<Using Include="DA.Results.Errors" />
+  </ItemGroup>
+</Project>
