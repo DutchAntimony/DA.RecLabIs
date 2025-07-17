@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DA.Messaging.FluentValidation\DA.Messaging.FluentValidation.csproj" />
     <ProjectReference Include="..\..\DA.Messaging\DA.Messaging.csproj" />
     <ProjectReference Include="..\Messaging.Tests.Data\Messaging.Tests.Data.csproj" />
   </ItemGroup>

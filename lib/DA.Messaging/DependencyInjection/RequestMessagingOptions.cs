@@ -6,10 +6,10 @@ namespace DA.Messaging.DependencyInjection;
 
 public sealed class RequestMessagingOptions
 {
-    internal List<Assembly> HandlerAssemblies { get; } = [];
+    public List<Assembly> HandlerAssemblies { get; } = [];
     internal List<Type> PipelineBehaviours { get; } = [];
 
-    internal Action<IServiceCollection>? ConfigureAdditionalServices { get; private set; }
+    public Action<IServiceCollection>? ConfigureAdditionalServices { get; set; }
 
     /// <summary>
     /// Add a single assembly to scan for request handlers.

@@ -10,6 +10,6 @@ namespace DA.Results.Errors;
 /// <param name="Failures">Collection of validation failures to solve before redoing the request.</param>
 public sealed record ValidationError(ImmutableList<ValidationFailure> Failures) : Error("Validation failed")
 {
-    public ValidationError(params ValidationFailure[] failures) : this(failures.ToImmutableList()) { }
+    public ValidationError(params IEnumerable<ValidationFailure> failures) : this(failures.ToImmutableList()) { }
 }
 

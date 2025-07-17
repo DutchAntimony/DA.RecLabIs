@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Tests.Integration
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messaging.Tests.Data", "lib\tests\Messaging.Tests.Data\Messaging.Tests.Data.csproj", "{1705A2E7-5832-484B-A8B4-BC18F56227FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DA.Messaging.FluentValidation", "lib\DA.Messaging.FluentValidation\DA.Messaging.FluentValidation.csproj", "{53938A6B-321A-E0A5-6856-1ABF01EFA47D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{1705A2E7-5832-484B-A8B4-BC18F56227FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1705A2E7-5832-484B-A8B4-BC18F56227FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1705A2E7-5832-484B-A8B4-BC18F56227FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53938A6B-321A-E0A5-6856-1ABF01EFA47D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53938A6B-321A-E0A5-6856-1ABF01EFA47D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53938A6B-321A-E0A5-6856-1ABF01EFA47D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53938A6B-321A-E0A5-6856-1ABF01EFA47D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -157,6 +163,7 @@ Global
 		{7B11C1EB-69FF-4D3A-856B-9AA5A318FA6F} = {44139EDD-8847-4C87-9C43-C7BFDC65DA29}
 		{0AACAF9F-04C9-4312-8CE0-A5A79CC1C465} = {44139EDD-8847-4C87-9C43-C7BFDC65DA29}
 		{1705A2E7-5832-484B-A8B4-BC18F56227FE} = {44139EDD-8847-4C87-9C43-C7BFDC65DA29}
+		{53938A6B-321A-E0A5-6856-1ABF01EFA47D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FBF7546D-F4B7-4472-B950-0361152150C0}
