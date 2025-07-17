@@ -2,6 +2,7 @@
 using DA.Messaging.Notifications.Abstractions;
 using DA.Messaging.Requests;
 using DA.Messaging.Requests.Abstractions;
+using DA.Messaging.Requests.Behaviours;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -74,6 +75,13 @@ public static class DependencyInjectionExtensions
         {
             services.AddRequestHandlersFromAssembly(assembly);
         }
+
+        foreach (var behaviorType in options.PipelineBehaviours)
+        {
+            services.AddScoped(typeof(IRequestPipelineBehaviour<,>), behaviorType);
+        }
+
+        options.ConfigureAdditionalServices?.Invoke(services);
 
         return services;
     }

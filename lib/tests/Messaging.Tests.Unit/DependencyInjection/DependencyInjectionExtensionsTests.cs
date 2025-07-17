@@ -72,6 +72,8 @@ public class DependencyInjectionExtensionsTests
         var services = new ServiceCollection();
 
         services.AddNotificationMessaging(options => options.FromAssembly(typeof(SampleNotification).Assembly));
+        var sink = new InMemoryTestNoficationSink();
+        services.AddSingleton<ITestNotificationSink>(sink);
 
         var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<INotificationPublisher>().ShouldNotBeNull();
@@ -84,6 +86,8 @@ public class DependencyInjectionExtensionsTests
         var services = new ServiceCollection();
 
         services.AddNotificationMessaging(options => options.FromAssemblies(typeof(SampleNotification).Assembly));
+        var sink = new InMemoryTestNoficationSink();
+        services.AddSingleton<ITestNotificationSink>(sink);
 
         var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<INotificationPublisher>().ShouldNotBeNull();
@@ -96,6 +100,8 @@ public class DependencyInjectionExtensionsTests
         var services = new ServiceCollection();
 
         services.AddNotificationMessaging(options => options.FromAssemblyContaining<SampleNotification>());
+        var sink = new InMemoryTestNoficationSink();
+        services.AddSingleton<ITestNotificationSink>(sink);
 
         var serviceProvider = services.BuildServiceProvider();
         serviceProvider.GetService<INotificationPublisher>().ShouldNotBeNull();

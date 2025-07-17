@@ -43,7 +43,7 @@ public partial class RequestDispatcherTests
         var ex = await Should.ThrowAsync<InvalidOperationException>(() =>
             dispatcher.DispatchAsync(query));
 
-        ex.Message.ShouldContain("No handler registered");
+        ex.Message.ShouldContain("No service for type");
     }
 
     private static IRequestDispatcher BuildDispatcherWithHandler()
