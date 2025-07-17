@@ -1,7 +1,7 @@
 ﻿using Messaging.Tests.Data;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Messaging.Tests.Unit.DependencyInjection;
+namespace Messaging.Tests.Integration;
 
 public class DependencyInjectionExtensionsTests
 {

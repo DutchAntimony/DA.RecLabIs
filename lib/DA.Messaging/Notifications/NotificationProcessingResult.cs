@@ -70,7 +70,6 @@ public record NotificationProcessingResult
             () => Success(processedBy, processedAt),
             error => Failure(processedBy, error.Message, processedAt));
 
-
     private NotificationProcessingResult(bool isProcessed, DateTime processedAt, string processedBy, Option<string> errorMessage) =>
         (IsProcessed, ProcessedAt, ProcessedBy, ErrorMessage) = (isProcessed, processedAt, processedBy, errorMessage);
 }

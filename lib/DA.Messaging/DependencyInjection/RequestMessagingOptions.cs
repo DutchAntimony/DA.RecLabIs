@@ -46,7 +46,7 @@ public sealed class RequestMessagingOptions
     /// <summary>
     /// Add a pipeline behavior to be executed in the specified order.
     /// </summary>
-    public RequestMessagingOptions AddPipelineBehavior(Type behaviorType)
+    public RequestMessagingOptions AddPipelineBehaviour(Type behaviorType)
     {
         ArgumentNullException.ThrowIfNull(behaviorType);
         PipelineBehaviours.Add(behaviorType);
