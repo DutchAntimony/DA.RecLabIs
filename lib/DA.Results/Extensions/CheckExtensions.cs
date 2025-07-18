@@ -225,6 +225,25 @@ public static class CheckExtensions
     }
 
     /// <summary>
+    /// Evaluates a async condition on the value contained within the <see cref="Result{TValue}"/> and returns either the
+    /// original result or an error.
+    /// </summary>
+    /// <remarks>This method allows chaining validation checks on a <see cref="Result{TValue}"/>. If the
+    /// result does not contain a value or the condition defined by <paramref name="check"/> evaluates to <see
+    /// langword="false"/>, the original result is returned. If the condition evaluates to <see langword="true"/>, the
+    /// specified <paramref name="error"/> is returned.</remarks>
+    /// <typeparam name="TValue">The type of the value contained within the <see cref="Result{TValue}"/>.</typeparam>
+    /// <param name="result">The <see cref="Result{TValue}"/> instance to check.</param>
+    /// <param name="check">A function that defines the condition to evaluate on the value.</param>
+    /// <param name="error">The <see cref="Error"/> to return if the condition fails.</param>
+    /// <returns>The original <see cref="Result{TValue}"/> if the condition is met or the result does not contain a value;
+    /// otherwise, the specified <paramref name="error"/>.</returns>
+    public static async Task<Result<TValue>> CheckNotAsync<TValue>(this Result<TValue> result, Func<TValue, Task<bool>> check, Error error)
+    {
+        return !result.TryGetValue(out var value) || await check(value) ? error: result;
+    }
+
+    /// <summary>
     /// Evaluates a condition on the value contained within the <see cref="Result{TValue}"/> and returns either the
     /// original result or an error.
     /// </summary>
@@ -262,5 +281,25 @@ public static class CheckExtensions
     {
         var result = await resultTask;
         return await CheckAsync(result, check, error);
+    }
+
+    /// <summary>
+    /// Evaluates a async condition on the value contained within the <see cref="Result{TValue}"/> and returns either the
+    /// original result or an error.
+    /// </summary>
+    /// <remarks>This method allows chaining validation checks on a <see cref="Result{TValue}"/>. If the
+    /// result does not contain a value or the condition defined by <paramref name="check"/> evaluates to <see
+    /// langword="false"/>, the original result is returned. If the condition evaluates to <see langword="true"/>, the
+    /// specified <paramref name="error"/> is returned.</remarks>
+    /// <typeparam name="TValue">The type of the value contained within the <see cref="Result{TValue}"/>.</typeparam>
+    /// <param name="resultTask">The Task of <see cref="Result{TValue}"/> instance to check.</param>
+    /// <param name="check">A function that defines the condition to evaluate on the value.</param>
+    /// <param name="error">The <see cref="Error"/> to return if the condition fails.</param>
+    /// <returns>The original <see cref="Result{TValue}"/> if the condition is met or the result does not contain a value;
+    /// otherwise, the specified <paramref name="error"/>.</returns>
+    public static async Task<Result<TValue>> CheckNotAsync<TValue>(this Task<Result<TValue>> resultTask, Func<TValue, Task<bool>> check, Error error)
+    {
+        var result = await resultTask;
+        return await CheckNotAsync(result, check, error);
     }
 }

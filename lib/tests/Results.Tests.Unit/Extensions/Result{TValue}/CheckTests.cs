@@ -76,11 +76,18 @@ public class CheckTests : ExtensionTestsBase
     {
         Func<double, Task<bool>> successFuncTask = async _ => await Task.FromResult(true);
         Func<double, Task<bool>> failureFuncTask = async _ => await Task.FromResult(false);
+
         (await _successResult.CheckAsync(successFuncTask, _nextError)).IsSuccess.ShouldBeTrue();
         (await _successResult.CheckAsync(failureFuncTask, _nextError)).ShouldBeFailureWithError(_nextError);
+
+        (await _successResult.CheckNotAsync(failureFuncTask, _nextError)).IsSuccess.ShouldBeTrue();
+        (await _successResult.CheckNotAsync(successFuncTask, _nextError)).ShouldBeFailureWithError(_nextError);
+
         (await _failureResult.CheckAsync(successFuncTask, _nextError)).ShouldBeFailureWithError(_originalError);
 
         (await _successResultTask.Check(_successPredicate, _nextError)).IsSuccess.ShouldBeTrue();
+
         (await _successResultTask.CheckAsync(successFuncTask, _nextError)).IsSuccess.ShouldBeTrue();
+        (await _successResultTask.CheckNotAsync(failureFuncTask, _nextError)).IsSuccess.ShouldBeTrue();
     }
 }

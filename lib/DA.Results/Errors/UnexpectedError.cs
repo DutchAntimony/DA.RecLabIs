@@ -8,5 +8,9 @@
 /// unexpected failure. It is typically used to represent unhandled exceptions or unforeseen issues that disrupt normal
 /// operation.</remarks>
 /// <param name="Exception">The exception that was unexpected.</param>
-public sealed record UnexpectedError(Exception Exception) : Error($"An unexpected error occurred: {Exception.Message}");
+public sealed record UnexpectedError(Exception Exception, string Details) : Error($"{Details}: {Exception.Message}")
+{
+    public UnexpectedError(Exception exception) 
+        : this(exception, "An unexpected error occurred") { }
+};
 
