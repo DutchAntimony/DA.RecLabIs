@@ -2,7 +2,6 @@
 using DA.Foundations.Examples;
 using DA.Optional;
 using Foundations.Tests.Unit.Helpers;
-using NSubstitute;
 
 namespace Foundations.Tests.Unit.DataAccess;
 
