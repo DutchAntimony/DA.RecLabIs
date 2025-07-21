@@ -1,5 +1,4 @@
 ﻿using DA.Foundations.Entities;
-using DA.Foundations.Examples;
 using DA.Optional;
 using DA.Results;
 using DA.Results.Errors;
@@ -16,7 +15,7 @@ public abstract class InMemoryDataStoreBase : IDataStore
     /// TypeParam object is a <c>ConcurrentDictionary{TKey, TEntity}</c>,
     /// <seealso cref="Load{TEntity, TKey}"/> method on where it get's filled.
     /// </summary>
-    protected readonly ConcurrentDictionary<Type, object> _cache = new();
+    protected ConcurrentDictionary<Type, object> _cache = new();
 
     /// <summary>
     /// The method of retreiving the data from the _cache may vary between implementations.
@@ -69,23 +68,5 @@ public abstract class InMemoryDataStoreBase : IDataStore
     {
         _cache.TryRemove(typeof(TEntity), out _); // If the set exists, remove it. If it doesn't, the set is already empty.
         return Task.CompletedTask;
-    }
-
-    /// <summary>
-    /// Protected helper method to get all instances of a given TEntity in an IEnumerable.
-    /// </summary>
-    protected bool TryGetEntities<TEntity, TKey>(out IEnumerable<TEntity> entities)
-        where TEntity : IEntity<TKey>
-        where TKey : struct, IEntityKey
-    {
-        entities = [];
-        if (!_cache.TryGetValue(typeof(TEntity), out var dictObj) ||
-            dictObj is not ConcurrentDictionary<TKey, TEntity> dict)
-        {
-            return false;
-        }
-
-        entities = dict.Values;
-        return true;
     }
 }

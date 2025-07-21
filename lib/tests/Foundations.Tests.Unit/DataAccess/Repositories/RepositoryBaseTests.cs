@@ -1,9 +1,10 @@
 ﻿using DA.Foundations.DataAccess;
+using DA.Foundations.DataAccess.Repositories;
 using DA.Foundations.Examples;
 using DA.Optional;
 using Foundations.Tests.Unit.Helpers;
 
-namespace Foundations.Tests.Unit.DataAccess;
+namespace Foundations.Tests.Unit.DataAccess.Repositories;
 
 public class RepositoryBaseTests
 {

@@ -4,7 +4,7 @@ using DA.Results;
 using DA.Results.Errors;
 using System.Linq.Expressions;
 
-namespace DA.Foundations.DataAccess;
+namespace DA.Foundations.DataAccess.Repositories;
 
 /// <summary>
 /// Generic repository for read only (GET) operations.

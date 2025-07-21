@@ -6,7 +6,7 @@ using DA.Results.Errors;
 using DA.Results.Extensions;
 using System.Linq.Expressions;
 
-namespace DA.Foundations.DataAccess;
+namespace DA.Foundations.DataAccess.Repositories;
 
 /// <summary>
 /// Generic abstract base repository that implements both the <see cref="IReadOnlyRepository{TEntity, TKey}"/>

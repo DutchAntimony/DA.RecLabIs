@@ -1,7 +1,7 @@
 ﻿using DA.Foundations.Entities;
 using DA.Results;
 
-namespace DA.Foundations.DataAccess;
+namespace DA.Foundations.DataAccess.Repositories;
 
 /// <summary>
 /// Generic repository for write only (POST, PUT, DELETE) operations.
